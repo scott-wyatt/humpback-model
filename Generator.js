@@ -88,7 +88,7 @@ module.exports = {
     // The `template` helper reads the specified template, making the
     // entire scope available to it (uses underscore/JST/ejs syntax).
     // Then the file is copied into the specified destination (on the left).
-    './assets/app/model/:filename' : {template : 'model.template.js'}
+    './assets/app/models/:filename' : {template : 'model.template.js'}
 
   },
 
