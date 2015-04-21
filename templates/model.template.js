@@ -20,25 +20,17 @@ angular.module('models.<%= modelname %>', [
         <%= Modelname %>Service.handler[envelope.verb](envelope)
     });
 
-})
-
-/**
-* @description 
-* The <%= Modelname %> factory
-* 
-**/
-.factory('<%= Modelname %>', function (DS) {
-	return DS.defineResource({
-		name: '<%= modelname %>',
+    return DS.defineResource({
+        name: '<%= modelname %>',
         maxAge: 36000000,
         deleteOnExpire: 'none',
         onExpire: function (id, <%= modelname %>) {
             console.log(id,"<%= Modelname %> Expired");
         },
         storageMode: 'localStorage',
-		idAttribute: 'id',
-		endpoint: '/<%= modelname %>',
-		baseUrl: '/api',
+        idAttribute: 'id',
+        endpoint: '/<%= modelname %>',
+        baseUrl: '/api',
         
         /**
         * @description 
@@ -69,12 +61,13 @@ angular.module('models.<%= modelname %>', [
         }
     });
 })
+
 /**
 * @description 
 * The <%= Modelname %>Service factory Exposes Handler and Service methods for the <%= Modelname %> Server Side Model
 * 
 **/
-.factory('<%= Modelname %>Service',function(<%= Modelname %>, $sailsSocket){
+.factory('<%= Modelname %>Service',function(DS, $sailsSocket){
 	var _service = {};
 	var _handler = {};
 
@@ -85,7 +78,7 @@ angular.module('models.<%= modelname %>', [
     **/
 	_handler.created = function(envelope){
         "use strict";
-        <%= Modelname %>.inject(envelope.data);
+        DS.inject('<%= modelname %>', envelope.data);
         console.log(envelope);
 
     };
@@ -97,7 +90,7 @@ angular.module('models.<%= modelname %>', [
     **/
     _handler.deleted = function(envelope){
         "use strict";
-        <%= Modelname %>.eject(envelope.id);
+        DS.eject('<%= modelname %>', envelope.data);
         console.log(envelope);
 
     };
@@ -112,9 +105,9 @@ angular.module('models.<%= modelname %>', [
         console.log(envelope);
         if(envelope.data){
             envelope.data.id = envelope.id;
-            <%= Modelname %>.inject(envelope.data);
+            DS.inject('<%= modelname %>', envelope.data);
         }else{
-            <%= Modelname %>.refresh(envelope.id);
+            DS.refresh('<%= modelname %>',envelope.id);
         }
 
     };
