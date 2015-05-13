@@ -37,13 +37,22 @@ angular.module('models.<%= modelname %>', [
         * Model's Life Cycle Callbacks
         * http://www.js-data.io/v1.5.8/docs/dsdefaults
         **/
+        beforeInject: function(resource, data){
+           //console.log(data);
+        },
         beforeCreate: function (resource, data, cb) {
             cb(null, data);
+        },
+        beforeUpdate: function(resource, data, cb){
+            cb(null, data);
+        },
+        afterUpdate: function(resource, data, cb){
+            var autoCorrect = typeof data.data !== undefined ? data.data : data
+            cb(null, autoCorrect);
         },
         afterCreate: function (resource, data, cb) {
             cb(null, data);
         },
-
         beforeDestroy: function (resource, data, cb) {
             cb(null, data);
         },
