@@ -47,8 +47,7 @@ angular.module('models.<%= modelname %>', [
             cb(null, data);
         },
         afterUpdate: function(resource, data, cb){
-            var autoCorrect = typeof data.data !== undefined ? data.data : data
-            cb(null, autoCorrect);
+            cb(null, data);
         },
         afterCreate: function (resource, data, cb) {
             cb(null, data);
